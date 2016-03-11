@@ -39,14 +39,14 @@ setup_site_{{ k }}_siteroot:
   file:
   {% if f_fun in ['managed'] %}
     - directory
-  {% else %}
-    - absent
-  {% endif %}
-    - name: {{ siteroot.path }}
     - mode: {{ siteroot.mode|default(755) }}
     - user: {{ siteroot.user|default('root') }}
     - group: {{ siteroot.group|default('root') }}
     - makedirs: True
+  {% else %}
+    - absent
+  {% endif %}
+    - name: {{ siteroot.path }}
     - require:
       - pkg: httpd
     - require_in:
