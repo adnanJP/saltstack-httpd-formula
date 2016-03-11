@@ -18,7 +18,7 @@ vhost_{{ k }}:
   file:
     - {{ f_fun }}
     - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ id ~ datamap.vhosts.name_suffix|default('')) }}
-  {% if f_fun not in ['absent'] %}
+  {% if f_fun in ['managed'] %}
   {% if 'template_path' in v %}
     - source: {{ v.template_path }}
     - template: jinja
