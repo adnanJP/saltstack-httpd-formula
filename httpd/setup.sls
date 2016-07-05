@@ -45,7 +45,10 @@ manage_mod_{{ k }}:
     {% if v.enable|default(True) %}
     - name: {{ datamap.a2enmod.path}} {{ v.name|default(k) }}
     {% else %}
-    - name: {{ datamap.a2dismod.path}} {{ v.force|default('') }} {{ v.name|default(k) }}
+    {% if v.force|default(False) %}
+    - name: {{ datamap.a2dismod.path}} -f {{ v.name|default(k) }}
+    {% else %}
+    - name: {{ datamap.a2dismod.path}} {{ v.name|default(k) }}
     {% endif %}
     {% if v.enable|default(True) %}
     - unless: test -L /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
