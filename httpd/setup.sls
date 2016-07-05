@@ -50,6 +50,7 @@ manage_mod_{{ k }}:
     {% else %}
     - name: {{ datamap.a2dismod.path}} {{ v.name|default(k) }}
     {% endif %}
+    {% endif %}
     {% if v.enable|default(True) %}
     - unless: test -L /etc/apache2/mods-enabled/{{ v.name|default(k) }}.load
     {% else %}
