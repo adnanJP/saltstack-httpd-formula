@@ -10,29 +10,29 @@ include:
 
 mod-security:
   pkg.installed:
-    - name: {{ modsec.mod_security.package }}
+    - name: {{ modsec.package }}
     - order: 180
     - require:
       - pkg: apache
 
-{% if modsec.mod_security.crs_install %}
+{% if modsec.crs_install %}
 mod-security-crs:
   pkg.installed:
-    - name: {{ modsec.mod_security.crs_package }}
+    - name: {{ modsec.crs_package }}
     - order: 180
     - require:
       - pkg: mod-security
 {% endif %}
 
-{% if modsec.mod_security.manage_config %}
+{% if modsec.manage_config %}
 mod-security-main-config:
   file.managed:
-    - name: {{ modsec.mod_security.config_file }}
+    - name: {{ modsec.config_file }}
     - order: 220
     - template: jinja
     - source:
       - {{ 'salt://apache/files/' ~ salt['grains.get']('os_family') ~ '/modsecurity.conf.jinja' }}
-    - context: {{ modsec.mod_security }}
+    - context: {{ modsec }}
     - require:
       - pkg: mod-security
     - watch_in:
