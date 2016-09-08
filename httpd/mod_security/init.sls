@@ -4,30 +4,29 @@
     modsec
 , grain='os_family', merge=salt['pillar.get']('httpd:mod_security')) or {} %}
 
-
 include:
   - httpd
 
 mod-security:
   pkg.installed:
-    - name: {{ modsec.package }}
+    - name: {{ modsecurity.package }}
     - order: 180
     - require:
       - pkg: apache
 
-{% if modsec.crs_install %}
+{% if modsecurity.crs_install %}
 mod-security-crs:
   pkg.installed:
-    - name: {{ modsec.crs_package }}
+    - name: {{ modsecurity.crs_package }}
     - order: 180
     - require:
       - pkg: mod-security
 {% endif %}
 
-{% if modsec.manage_config %}
+{% if modsecurity.manage_config %}
 mod-security-main-config:
   file.managed:
-    - name: {{ modsec.config_file }}
+    - name: {{ modsecurity.config_file }}
     - order: 220
     - template: jinja
     - source:
