@@ -15,7 +15,7 @@ mod-security:
     - require:
       - pkg: apache
 
-{% if apache.mod_security.crs_install %}
+{% if modsec.mod_security.crs_install %}
 mod-security-crs:
   pkg.installed:
     - name: {{ modsec.mod_security.crs_package }}
@@ -24,7 +24,7 @@ mod-security-crs:
       - pkg: mod-security
 {% endif %}
 
-{% if apache.mod_security.manage_config %}
+{% if modsec.mod_security.manage_config %}
 mod-security-main-config:
   file.managed:
     - name: {{ modsec.mod_security.config_file }}
