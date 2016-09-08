@@ -35,7 +35,7 @@ mod-security-main-config:
     - require:
       - pkg: mod-security
     - watch_in:
-      - module: apache-reload
+      - service: httpd
 {% endif %}
 
 {% if grains['os_family']=="Debian" %}
