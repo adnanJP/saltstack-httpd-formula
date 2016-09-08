@@ -12,7 +12,7 @@ mod-security:
     - name: {{ modsecurity.package }}
     - order: 180
     - require:
-      - pkg: apache
+      - pkg: httpd
 
 {% if modsecurity.crs_install %}
 mod-security-crs:
