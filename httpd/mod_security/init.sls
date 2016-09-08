@@ -30,7 +30,7 @@ mod-security-main-config:
     - order: 220
     - template: jinja
     - source:
-      - {{ 'salt://apache/files/' ~ salt['grains.get']('os_family') ~ '/modsecurity.conf.jinja' }}
+      - {{ 'salt://httpd/mod_security/files/' ~ salt['grains.get']('os_family') ~ '/modsecurity.conf.jinja' }}
     - context: {{ modsec }}
     - require:
       - pkg: mod-security
