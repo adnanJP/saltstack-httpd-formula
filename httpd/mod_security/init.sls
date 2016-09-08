@@ -2,7 +2,7 @@
 
 {% set modsecurity = salt['grains.filter_by'](
     modsec
-, grain='os_family', merge=salt['pillar.get']('apache:mod_security')) or {} %}
+, grain='os_family', merge=salt['pillar.get']('httpd:mod_security')) or {} %}
 
 
 include:
@@ -10,7 +10,7 @@ include:
 
 mod-security:
   pkg.installed:
-    - name: {{ apache.mod_security.package }}
+    - name: {{ modsec.mod_security.package }}
     - order: 180
     - require:
       - pkg: apache
@@ -18,7 +18,7 @@ mod-security:
 {% if apache.mod_security.crs_install %}
 mod-security-crs:
   pkg.installed:
-    - name: {{ apache.mod_security.crs_package }}
+    - name: {{ modsec.mod_security.crs_package }}
     - order: 180
     - require:
       - pkg: mod-security
@@ -27,12 +27,12 @@ mod-security-crs:
 {% if apache.mod_security.manage_config %}
 mod-security-main-config:
   file.managed:
-    - name: {{ apache.mod_security.config_file }}
+    - name: {{ modsec.mod_security.config_file }}
     - order: 220
     - template: jinja
     - source:
       - {{ 'salt://apache/files/' ~ salt['grains.get']('os_family') ~ '/modsecurity.conf.jinja' }}
-    - context: {{ apache.mod_security }}
+    - context: {{ modsec.mod_security }}
     - require:
       - pkg: mod-security
     - watch_in:
