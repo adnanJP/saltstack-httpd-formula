@@ -46,5 +46,5 @@ a2enmod security2:
     - require:
       - pkg: mod-security
     - watch_in:
-      - module: apache-restart
+      - service: httpd
 {% endif %}
